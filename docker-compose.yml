@@ -8,7 +8,21 @@ services:
     env_file:
       - .env
     volumes:
-      #   - ./services/exercises_db/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro
       - ./services/exercises_db/mongo_volume:/data/db
     ports:
       - "27017-27019:27017-27019"
+
+  exercises_service:
+    container_name: exercises_service
+    env_file:
+      - .env
+    environment:
+      - TEST=TESTinPROD
+    build:
+      context: ./services/exercises
+      dockerfile: Dockerfile
+    restart: "always"
+    depends_on:
+      - exercises_db
+    ports:
+      - "3000:3000"

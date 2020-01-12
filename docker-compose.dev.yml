@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  exercises_service:
+    environment:
+      - TEST=TESTinDEVMODEYOLOooo
+    restart: "no"
+    volumes:
+      - ./services/exercises:/app
+    command: ["npm", "run", "start"]
