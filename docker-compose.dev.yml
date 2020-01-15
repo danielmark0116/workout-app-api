@@ -2,6 +2,9 @@ version: "3"
 
 services:
   auth:
+    volumes:
+      - ./services/auth:/app
+      - /app/node_modules
     command: ["npm", "run", "start:dev"]
   # exercises_service:
   #   environment:
