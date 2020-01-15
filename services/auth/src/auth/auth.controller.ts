@@ -14,9 +14,8 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Get()
-  @UsePipes(ValidationPipe)
-  helloWorld(@Body() userAuthDto: UserAuthDto): any {
-    return this.authService.helloWorld(userAuthDto);
+  helloWorld(): string {
+    return "yolo";
   }
 
   @Post("/signup")
