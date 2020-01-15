@@ -1,7 +1,7 @@
 import { Repository, EntityRepository } from "typeorm";
 import { User } from "./user.entity";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
-import { BadRequestException } from "@nestjs/common";
+import { BadRequestException, ConflictException } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 
 @EntityRepository(User)
@@ -24,6 +24,10 @@ export class UserRepository extends Repository<User> {
 
       return newUser;
     } catch (e) {
+      if (e.code === "23505") {
+        throw new ConflictException("User already exists");
+      }
+
       throw new BadRequestException();
     }
   }
