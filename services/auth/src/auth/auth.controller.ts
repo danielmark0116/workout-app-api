@@ -21,13 +21,13 @@ export class AuthController {
 
   @Post("/signup")
   @UsePipes(ValidationPipe)
-  signUpUser(@Body() userAuthDto: UserAuthDto): Promise<User> {
+  signUpUser(@Body() userAuthDto: UserAuthDto): Promise<string> {
     return this.authService.createNewUser(userAuthDto);
   }
 
   @Post("/signin")
   @UsePipes(ValidationPipe)
-  signInUser(@Body() userAuthDto: UserAuthDto): string {
-    return "sign IN user route";
+  signInUser(@Body() userAuthDto: UserAuthDto): Promise<any> {
+    return this.authService.loginUser(userAuthDto);
   }
 }

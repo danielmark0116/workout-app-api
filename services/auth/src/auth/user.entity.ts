@@ -6,6 +6,8 @@ import {
   Unique
 } from "typeorm";
 
+import * as bcrypt from "bcrypt";
+
 @Entity()
 @Unique(["email"])
 export class User extends BaseEntity {
@@ -20,4 +22,8 @@ export class User extends BaseEntity {
 
   @Column({ default: new Date().getTime() })
   createdAt: string;
+
+  validatePassword(password: string): boolean {
+    return bcrypt.compareSync(password, this.password);
+  }
 }
