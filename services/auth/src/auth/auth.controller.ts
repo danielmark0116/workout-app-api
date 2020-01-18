@@ -28,10 +28,13 @@ export class AuthController {
   }
 
   @Post("/signin")
-  @UsePipes(ValidationPipe)
-  signInUser(@Body() userAuthDto: UserAuthDto): Promise<any> {
-    console.log("sdfoidsfjiso");
-    return this.authService.loginUser(userAuthDto);
+  test() {
+    return "yolo";
+  }
+
+  @Get("/yolo")
+  test2() {
+    return "sdfdsifojs";
   }
 
   @Get("/secret")

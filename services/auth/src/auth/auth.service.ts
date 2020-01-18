@@ -21,37 +21,9 @@ export class AuthService {
       userId: newUser.id
     };
 
-    const accessToken = await this.jwtService.sign(payload);
+    const accessToken = await this.jwtService.signAsync(payload);
 
     return accessToken;
-  }
-
-  async loginUser(userAuthDto: UserAuthDto): Promise<string> {
-    const { email, password } = userAuthDto;
-
-    const user = await this.UserRepository.findOne({ email });
-
-    if (user && user.validatePassword(password)) {
-      const payload: AccessTokenPayload = {
-        email: user.email,
-        userId: user.id
-      };
-
-      // const sessionId = await uuid.v4();
-
-      // user.userSessions = user.userSessions + sessionId + ",";
-
-      // await user.save();
-
-      return await this.jwtService.signAsync({ ...payload });
-      return "s";
-    }
-
-    throw new UnauthorizedException("Invalid credentials");
-  }
-
-  async loginUser2(userAuthDto: UserAuthDto): Promise<string> {
-    return "s";
   }
 
   async getAllUsers(): Promise<User[]> {

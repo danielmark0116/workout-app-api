@@ -9,7 +9,9 @@ import { User } from "./auth/user.entity";
     TypeOrmModule.forRoot({
       type: "postgres",
       host: "auth_db",
+      // host: "localhost",
       port: 5432,
+      // port: 6000,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
