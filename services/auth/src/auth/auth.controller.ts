@@ -4,11 +4,13 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
-  Post
+  Post,
+  UseGuards
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
 import { User } from "./user.entity";
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller("auth")
 export class AuthController {
@@ -29,5 +31,11 @@ export class AuthController {
   @UsePipes(ValidationPipe)
   signInUser(@Body() userAuthDto: UserAuthDto): Promise<any> {
     return this.authService.loginUser(userAuthDto);
+  }
+
+  @Get("/secret")
+  @UseGuards(AuthGuard())
+  secretRoute(): string {
+    return "Secret route";
   }
 }
