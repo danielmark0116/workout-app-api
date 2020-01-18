@@ -11,7 +11,6 @@ import { AuthService } from "./auth.service";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
 import { User } from "./user.entity";
 import { AuthGuard } from "@nestjs/passport";
-import { GetToken } from "./decorators/getToken.decorator";
 
 @Controller("auth")
 export class AuthController {
@@ -31,11 +30,12 @@ export class AuthController {
   @Post("/signin")
   @UsePipes(ValidationPipe)
   signInUser(@Body() userAuthDto: UserAuthDto): Promise<any> {
+    console.log("sdfoidsfjiso");
     return this.authService.loginUser(userAuthDto);
   }
 
   @Get("/secret")
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   secretRoute(): string {
     return "Secret route";
   }

@@ -30,7 +30,7 @@ export class User extends BaseEntity {
     return bcrypt.compareSync(password, this.password);
   }
 
-  isSessionActive(uuid: string): boolean {
-    return this.userSessions.split(",").includes(uuid);
-  }
+  // isSessionActive(uuid: string): boolean {
+  //   return this.userSessions.split(",").includes(uuid);
+  // }
 }

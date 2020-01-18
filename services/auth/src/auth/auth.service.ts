@@ -43,13 +43,15 @@ export class AuthService {
 
       // await user.save();
 
-      console.log(payload);
-
-      // return await this.jwtService.signAsync(payload);
+      return await this.jwtService.signAsync({ ...payload });
       return "s";
     }
 
     throw new UnauthorizedException("Invalid credentials");
+  }
+
+  async loginUser2(userAuthDto: UserAuthDto): Promise<string> {
+    return "s";
   }
 
   async getAllUsers(): Promise<User[]> {
