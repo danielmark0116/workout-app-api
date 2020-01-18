@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserRepository } from "./user.repository";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
-import { JwtStrategy } from "strategies/jwtStrategy.strategy";
+import { JwtStrategy } from "src/auth/strategies/jwtStrategy.strategy";
 
 @Module({
   imports: [

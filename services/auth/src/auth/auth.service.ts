@@ -4,6 +4,7 @@ import { UserRepository } from "./user.repository";
 import { User } from "./user.entity";
 import { JwtService } from "@nestjs/jwt";
 import { AccessTokenPayload } from "./interfaces/accessToken.interface";
+import * as uuid from "uuid";
 
 @Injectable()
 export class AuthService {
@@ -36,7 +37,16 @@ export class AuthService {
         userId: user.id
       };
 
-      return await this.jwtService.sign(payload);
+      // const sessionId = await uuid.v4();
+
+      // user.userSessions = user.userSessions + sessionId + ",";
+
+      // await user.save();
+
+      console.log(payload);
+
+      // return await this.jwtService.signAsync(payload);
+      return "s";
     }
 
     throw new UnauthorizedException("Invalid credentials");

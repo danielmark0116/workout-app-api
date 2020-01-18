@@ -11,6 +11,7 @@ import { AuthService } from "./auth.service";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
 import { User } from "./user.entity";
 import { AuthGuard } from "@nestjs/passport";
+import { GetToken } from "./decorators/getToken.decorator";
 
 @Controller("auth")
 export class AuthController {

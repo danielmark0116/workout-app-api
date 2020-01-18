@@ -23,7 +23,14 @@ export class User extends BaseEntity {
   @Column({ default: new Date().getTime() })
   createdAt: string;
 
+  @Column({ default: "" })
+  userSessions: string;
+
   validatePassword(password: string): boolean {
     return bcrypt.compareSync(password, this.password);
+  }
+
+  isSessionActive(uuid: string): boolean {
+    return this.userSessions.split(",").includes(uuid);
   }
 }
