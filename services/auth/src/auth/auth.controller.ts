@@ -37,6 +37,11 @@ export class AuthController {
     return "sdfdsifojs";
   }
 
+  @Get("sdiufhdsui")
+  sdofijds() {
+    return "isdjfoisdjfi";
+  }
+
   @Get("/secret")
   // @UseGuards(AuthGuard())
   secretRoute(): string {

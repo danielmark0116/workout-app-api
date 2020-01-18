@@ -8,13 +8,16 @@ import { User } from "./auth/user.entity";
     AuthModule,
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "auth_db",
-      // host: "localhost",
+      host: "localhost",
+      // host: "auth_db",
       port: 5432,
       // port: 6000,
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
+      // username: process.env.POSTGRES_USER,
+      username: "postgres",
+      // password: process.env.POSTGRES_PASSWORD,
+      password: "postgres",
+      // database: process.env.POSTGRES_DB,
+      database: "postgres",
       entities: [User],
       synchronize: true
     })
