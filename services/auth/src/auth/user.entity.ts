@@ -3,10 +3,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  Unique
+  Unique,
+  OneToMany
 } from "typeorm";
 
 import * as bcrypt from "bcrypt";
+import { Session } from "./session.entity";
 
 @Entity()
 @Unique(["email"])
@@ -23,14 +25,18 @@ export class User extends BaseEntity {
   @Column({ default: new Date().getTime() })
   createdAt: string;
 
-  @Column({ default: "" })
-  userSessions: string;
+  @OneToMany(
+    type => Session,
+    session => session.user,
+    { eager: true }
+  )
+  userSessions: Session[];
 
   validatePassword(password: string): boolean {
     return bcrypt.compareSync(password, this.password);
   }
 
-  // isSessionActive(uuid: string): boolean {
-  //   return this.userSessions.split(",").includes(uuid);
-  // }
+  isSessionActive(uuid: string): boolean {
+    return true;
+  }
 }

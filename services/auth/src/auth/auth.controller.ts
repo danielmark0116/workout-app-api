@@ -5,12 +5,15 @@ import {
   UsePipes,
   ValidationPipe,
   Post,
-  UseGuards
+  UseGuards,
+  Res
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
 import { User } from "./user.entity";
 import { AuthGuard } from "@nestjs/passport";
+import { GetToken, GetRefreshToken } from "./decorators/getToken.decorator";
+import { Response } from "express";
 
 @Controller("auth")
 export class AuthController {
@@ -21,29 +24,42 @@ export class AuthController {
     return this.authService.getAllUsers();
   }
 
+  @Get("/test")
+  test(
+    @GetToken() accessToken: string,
+    @GetRefreshToken() refreshToken: string
+  ) {
+    return { accessToken, refreshToken };
+  }
+
+  @Post("/refresh")
+  freshTokens(
+    @GetToken() accessToken: string,
+    @GetRefreshToken() refreshToken: string
+  ) {
+    return this.authService.refreshTokens(accessToken, refreshToken);
+  }
+
   @Post("/signup")
   @UsePipes(ValidationPipe)
-  signUpUser(@Body() userAuthDto: UserAuthDto): Promise<string> {
-    return this.authService.createNewUser(userAuthDto);
+  signUpUser(
+    @Body() userAuthDto: UserAuthDto,
+    @Res() res: Response
+  ): Promise<Response> {
+    return this.authService.createNewUser(userAuthDto, res);
   }
 
   @Post("/signin")
-  test() {
-    return "yolo";
-  }
-
-  @Get("/yolo")
-  test2() {
-    return "sdfdsifojs";
-  }
-
-  @Get("sdiufhdsui")
-  sdofijds() {
-    return "isdjfoisdjfi";
+  @UsePipes(ValidationPipe)
+  signInUser(
+    @Body() userAuthDto: UserAuthDto,
+    @Res() res: Response
+  ): Promise<Response> {
+    return this.authService.signInUser(userAuthDto, res);
   }
 
   @Get("/secret")
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   secretRoute(): string {
     return "Secret route";
   }
