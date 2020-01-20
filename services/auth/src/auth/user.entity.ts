@@ -36,7 +36,9 @@ export class User extends BaseEntity {
     return bcrypt.compareSync(password, this.password);
   }
 
-  isSessionActive(uuid: string): boolean {
+  async isSessionActive(session: Session): Promise<boolean> {
+    // const isActive = await this.userSessions.includes();
+
     return true;
   }
 }

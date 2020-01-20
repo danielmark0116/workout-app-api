@@ -10,34 +10,22 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UserAuthDto } from "./dto/userAuthDto.dto";
-import { User } from "./user.entity";
 import { AuthGuard } from "@nestjs/passport";
 import { GetToken, GetRefreshToken } from "./decorators/getToken.decorator";
-import { Response } from "express";
+import { Response, Request } from "express";
+import { SessionGuard } from "./guards/sessionGuard.guard";
 
 @Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Get()
-  getAllUsers(): Promise<User[]> {
-    return this.authService.getAllUsers();
-  }
-
-  @Get("/test")
-  test(
-    @GetToken() accessToken: string,
-    @GetRefreshToken() refreshToken: string
-  ) {
-    return { accessToken, refreshToken };
-  }
-
   @Post("/refresh")
-  freshTokens(
+  refreshTokens(
     @GetToken() accessToken: string,
-    @GetRefreshToken() refreshToken: string
+    @GetRefreshToken() refreshToken: string,
+    @Res() res: Response
   ) {
-    return this.authService.refreshTokens(accessToken, refreshToken);
+    return this.authService.refreshTokens(accessToken, refreshToken, res);
   }
 
   @Post("/signup")
@@ -58,8 +46,23 @@ export class AuthController {
     return this.authService.signInUser(userAuthDto, res);
   }
 
+  @Post("/logout")
+  @UseGuards(AuthGuard())
+  @UseGuards(SessionGuard)
+  logout(@GetToken() accessToken: string): Promise<any> {
+    return this.authService.logout(accessToken);
+  }
+
+  @Post("/hardlogout")
+  @UseGuards(AuthGuard())
+  @UseGuards(SessionGuard)
+  hardLogout(@GetToken() accessToken: string): Promise<any> {
+    return this.authService.hardLougout(accessToken);
+  }
+
   @Get("/secret")
   @UseGuards(AuthGuard())
+  @UseGuards(SessionGuard)
   secretRoute(): string {
     return "Secret route";
   }

@@ -13,7 +13,7 @@ export class Session extends BaseEntity {
   id: number;
 
   @Column()
-  sessionId: string;
+  userId: number;
 
   @ManyToOne(
     type => User,
